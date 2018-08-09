@@ -33,40 +33,40 @@ Linux配置Zookeeper环境搭建集群<br>
 （2）三台服务器主机，IP地址：192.168.10.27、192.168.10.28、192.168.10.29  <br>
 
 2.官网查找版本地址：<br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/zk1.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/zk1.png)<br><br>
 
 3.命令下载zookeeper-3.4.12.tar.gz到/opt/目录下：wget http://mirrors.shu.edu.cn/apache/zookeeper/stable/zookeeper-3.4.12.tar.gz <br>
 4.解压：tar -xzvf zookeeper-3.4.12.tar.gz <br>
 5.到conf目录下复制zoo_sample.cfg为zoo.cfg：cp zoo_sample.cfg zoo.cfg修改配置： <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/zk2.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/zk2.png)<br><br>
 6.将zoo.cfg文件复制到其它服务器相同位置：<br>
 (1)scp zoo.cfg  root@192.168.10.28:/opt/zookeeper-3.4.12/conf <br>
 (2)scp zoo.cfg  root@192.168.10.29:/opt/zookeeper-3.4.12/conf <br>
 7.在根目录的var目录下创建文件夹zookeeper，在zookeeper目录下创建文件myid，在myid文件保存服务编号： <br>
 （1）mkdir /var/zookeeper <br>
 （2）vim myid <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/zk3.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/zk3.png)<br><br>
 （3）例如：编辑myid为1（server的id） <br>
 8.启动三台服务器，在bin目录下：. /skServer.sh  start <br>
 注：只要启动的服务器超过半数，zookeeper就能对外服务 <br>
 9.使用telnet测试： <br>
 （1）telnet  192.168.10.27  2181 <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/zk4.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/zk4.png)<br><br>
 （2）继续输入state，出现如下说明集群搭建成功 <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/zk5.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/zk5.png)<br><br>
  
 10.参考视频：http://www.jikexueyuan.com/course/1813_3.html?ss=1 <br>
 
 
 Linux配置Kafka环境搭建集群 <br>
 1.官网找到下载链接复制： <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/kfk1.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/kfk1.png)<br><br>
 2.下载至目录/opt/: <br>
 wget http://mirrors.shu.edu.cn/apache/kafka/2.0.0/kafka_2.11-2.0.0.tgz <br>
 3.解压：tar -xzvf kafka_2.11-2.0.0.tgz <br>
 4.进入config文件夹配置： <br>
 （1）zookeeper.properties： <br>
-     ![Image text](https://github.com/xx132917/kafka/blob/master/img/kfk2.png)<br><br>
+     ![Image text](https://github.com/xx132917/kafka/blob/java/img/kfk2.png)<br><br>
 （2）sever.properties <br>
 #    http://www.apache.org/licenses/LICENSE-2.0 
 #
@@ -104,17 +104,15 @@ listeners=PLAINTEXT://master:9092  <br>
 # The number of threads that the server uses for receiving requests from the network and sending responses to the network
 num.network.threads=3 <br>
 
-                                                                                                                           43,0-1         7%
-
 5.开启服务： <br>
    （1）先启动zookeeper服务 <br>
   （2）启动kafka :  bin/kafka-server-start.sh config/server.properties &（后台启动） <br>
 5.创建topic：bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test <br>
   查看 topic： bin/kafka-topics.sh --list --zookeeper localhost:2181 <br>
 6.模拟生产者：bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/kfk3.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/kfk3.png)<br><br>
 7.  打开另一个终端模拟消费者：bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning  <br>
-![Image text](https://github.com/xx132917/kafka/blob/master/img/kfk4.png)<br><br>
+![Image text](https://github.com/xx132917/kafka/blob/java/img/kfk4.png)<br><br>
 
 Java使用kafka <br>
 1.依赖Jar包： <br>
